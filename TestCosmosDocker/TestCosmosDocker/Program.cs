@@ -46,7 +46,7 @@ public class Program
             }));
         
         var provider = serviceCollection.BuildServiceProvider();
-        var context = provider.GetService<CosmosContext>();
+        await using var context = provider.GetService<CosmosContext>();
 
         var record = new MyModel()
         {
@@ -99,7 +99,7 @@ public class Program
         
         Console.WriteLine("Connecting to the Cosmos emulator...");
 
-        var cosmosClient = new CosmosClient(accountEndpoint, primaryKey, cosmosClientOptions);
+        using var cosmosClient = new CosmosClient(accountEndpoint, primaryKey, cosmosClientOptions);
         
         Console.WriteLine("Connection successful. \n"
                           +"Upserting database and container into Cosmos...");
